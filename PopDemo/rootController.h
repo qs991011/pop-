@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-@interface rootController : UIViewController
+@interface rootController : UIViewController<UIViewControllerTransitioningDelegate>
 
 @end
