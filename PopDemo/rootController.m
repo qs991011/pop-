@@ -11,6 +11,9 @@
 #import "POP.h"
 #import "DismissingAnimationConntroller.h"
 #import "PresentingAnimationController.h"
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavfilter/avfilter.h>
 @interface rootController  ()
 
 {
@@ -31,22 +34,55 @@
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [view addGestureRecognizer:tap];
-    
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(200, 300, 80, 80)];
     [btn addTarget:self action:@selector(push) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [btn setTitle:@"push" forState:UIControlStateNormal];
     [self.view addSubview:btn];
-    
-    
+
 }
 
 - (void)push{
-    firstViewController *vc = [[firstViewController alloc] init];
-   // vc.delegate = self;
-    vc.transitioningDelegate = self;
-    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    [self presentViewController:vc animated:YES completion:nil];
+    /**
+     * Protocol:  FFmpeg类库支持的协议
+     * AVFormat:  FFmpeg类库支持的封装格式
+     * AVCodec:   FFmpeg类库支持的编解码器
+     * AVFilter:  FFmpeg类库支持的滤镜
+     * Configure: FFmpeg类库的配置信息
+     */
+  
+//    firstViewController *vc = [[firstViewController alloc] init];
+//   // vc.delegate = self;
+//    vc.transitioningDelegate = self;
+//    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+//    [self presentViewController:vc animated:YES completion:nil];
+//    av_register_all();
+//    char info[10000] = { 0 };
+//   // printf("%s\n", avcodec_configuration());
+//    sprintf(info, "%s\n", avcodec_configuration());
+//    NSString * info_ns = [NSString stringWithFormat:@"%s", info];
+//    NSLog(@"%@\n",info_ns);
+    
+    
+    char info[40000]={0};
+    av_register_all();
+    
+    struct URLProtocol *pup = NULL;
+    //Input
+    struct URLProtocol **p_temp = &pup;
+    avio_enum_protocols((void **)p_temp, 0);
+    while ((*p_temp) != NULL){
+        sprintf(info, "%s[In ][%10s]\n", info, avio_enum_protocols((void **)p_temp, 0));
+    }
+    pup = NULL;
+    //Output
+    avio_enum_protocols((void **)p_temp, 1);
+    while ((*p_temp) != NULL){
+        sprintf(info, "%s[Out][%10s]\n", info, avio_enum_protocols((void **)p_temp, 1));
+    }
+    //printf("%s", info);
+    NSString * info_ns = [NSString stringWithFormat:@"%s", info];
+    NSLog(@"%@",info_ns);
     
 }
 
