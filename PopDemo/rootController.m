@@ -11,6 +11,7 @@
 #import "POP.h"
 #import "DismissingAnimationConntroller.h"
 #import "PresentingAnimationController.h"
+
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libavfilter/avfilter.h>
@@ -56,14 +57,8 @@
 //    vc.transitioningDelegate = self;
 //    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
 //    [self presentViewController:vc animated:YES completion:nil];
-//    av_register_all();
-//    char info[10000] = { 0 };
-//   // printf("%s\n", avcodec_configuration());
-//    sprintf(info, "%s\n", avcodec_configuration());
-//    NSString * info_ns = [NSString stringWithFormat:@"%s", info];
-//    NSLog(@"%@\n",info_ns);
-    
-    
+
+     /**
     char info[40000]={0};
     av_register_all();
     
@@ -83,6 +78,27 @@
     //printf("%s", info);
     NSString * info_ns = [NSString stringWithFormat:@"%s", info];
     NSLog(@"%@",info_ns);
+      */
+    
+    char info[40000] = { 0 };
+    av_register_all();
+    
+    AVInputFormat *if_temp = av_iformat_next(NULL);
+    AVOutputFormat *of_temp = av_oformat_next(NULL);
+    
+    while (if_temp != NULL) {
+        sprintf(info, "%s[In ]%10s\n",info,if_temp->name);
+        if_temp = if_temp->next;
+    }
+    
+    while (of_temp != NULL) {
+        sprintf(info, "%s[Out]%10s\n",info,of_temp->name);
+        of_temp = of_temp->next;
+    }
+    
+    NSString *info_ns = [NSString stringWithFormat:@"%s",info];
+    NSLog(@"%@",info_ns);
+    
     
 }
 

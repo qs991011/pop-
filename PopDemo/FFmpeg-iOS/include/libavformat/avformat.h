@@ -1378,6 +1378,7 @@ typedef struct AVFormatContext {
      * iformat/oformat.flags. In such a case, the (de)muxer will handle
      * I/O in some other way and this field will be NULL.
      */
+    // 输入数据的缓存
     AVIOContext *pb;
 
     /* stream info */
@@ -1392,6 +1393,7 @@ typedef struct AVFormatContext {
      *
      * Set by avformat_new_stream(), must not be modified by any other code.
      */
+    //视音频流的个数
     unsigned int nb_streams;
     /**
      * A list of all streams in the file. New streams are created with
@@ -1404,6 +1406,7 @@ typedef struct AVFormatContext {
      *
      * Freed by libavformat in avformat_free_context().
      */
+    //视音频流
     AVStream **streams;
 
     /**
@@ -1412,6 +1415,7 @@ typedef struct AVFormatContext {
      * - demuxing: set by avformat_open_input()
      * - muxing: may be set by the caller before avformat_write_header()
      */
+    // 文件名
     char filename[1024];
 
     /**
@@ -1431,6 +1435,7 @@ typedef struct AVFormatContext {
      *
      * Demuxing only, set by libavformat.
      */
+    // 时长
     int64_t duration;
 
     /**
@@ -1438,6 +1443,7 @@ typedef struct AVFormatContext {
      * available. Never set it directly if the file_size and the
      * duration are known as FFmpeg can compute it automatically.
      */
+    // 比特率
     int64_t bit_rate;
 
     unsigned int packet_size;
@@ -1554,6 +1560,7 @@ typedef struct AVFormatContext {
      *
      * Freed by libavformat in avformat_free_context().
      */
+    //  元数据
     AVDictionary *metadata;
 
     /**
