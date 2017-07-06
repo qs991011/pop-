@@ -2005,7 +2005,10 @@ void av_register_all(void);
 
 void av_register_input_format(AVInputFormat *format);
 void av_register_output_format(AVOutputFormat *format);
-
+//对网络组件进行全局初始化。这是可选的，但建议使用，因为它避免了为每个会话隐式地设置设置的开销。
+/**
+如果在某些主要版本中使用了网络协议，则调用该函数将成为强制性的。
+ */
 /**
  * Do global initialization of network components. This is optional,
  * but recommended, since it avoids the overhead of implicitly

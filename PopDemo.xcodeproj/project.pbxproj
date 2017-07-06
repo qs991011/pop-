@@ -24,6 +24,7 @@
 		D75819271F013DB300B6FFB9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D75819261F013DB300B6FFB9 /* libiconv.tbd */; };
 		D75819291F013DC300B6FFB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75819281F013DC300B6FFB9 /* VideoToolbox.framework */; };
 		D763CB941EE6B79A004FEBCF /* QTextAsyncLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D763CB931EE6B79A004FEBCF /* QTextAsyncLayer.m */; };
+		D784BC8F1F0DDFE40046F90C /* FFmpegManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */; };
 		D7A8AA1A1E138E4B00F83024 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7A8AA191E138E4B00F83024 /* MapKit.framework */; };
 		D7B2FE261E0032B60084B575 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B2FE251E0032B60084B575 /* main.m */; };
 		D7B2FE291E0032B60084B575 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B2FE281E0032B60084B575 /* AppDelegate.m */; };
@@ -211,6 +212,8 @@
 		D75819281F013DC300B6FFB9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		D763CB921EE6B79A004FEBCF /* QTextAsyncLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTextAsyncLayer.h; sourceTree = "<group>"; };
 		D763CB931EE6B79A004FEBCF /* QTextAsyncLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTextAsyncLayer.m; sourceTree = "<group>"; };
+		D784BC8D1F0DDFE40046F90C /* FFmpegManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpegManager.h; sourceTree = "<group>"; };
+		D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpegManager.m; sourceTree = "<group>"; };
 		D7A8AA191E138E4B00F83024 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D7B2FE211E0032B60084B575 /* PopDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B2FE251E0032B60084B575 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -578,6 +581,8 @@
 				D7B2FE281E0032B60084B575 /* AppDelegate.m */,
 				D7B2FEAD1E0038CC0084B575 /* rootController.h */,
 				D7B2FEAE1E0038CC0084B575 /* rootController.m */,
+				D784BC8D1F0DDFE40046F90C /* FFmpegManager.h */,
+				D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */,
 				D756DABC1ED3CCDD00B8C471 /* firstViewController.h */,
 				D756DABD1ED3CCDD00B8C471 /* firstViewController.m */,
 				D756DAC51ED3D50100B8C471 /* PresentingAnimationController.h */,
@@ -883,6 +888,7 @@
 				D7B2FEA11E0034410084B575 /* POPLayerExtras.mm in Sources */,
 				D7B2FE261E0032B60084B575 /* main.m in Sources */,
 				D7B2FE9D1E0034410084B575 /* POPCGUtils.mm in Sources */,
+				D784BC8F1F0DDFE40046F90C /* FFmpegManager.m in Sources */,
 				D7B2FEA21E0034410084B575 /* POPMath.mm in Sources */,
 				D7B2FE9E1E0034410084B575 /* POPCustomAnimation.mm in Sources */,
 			);
