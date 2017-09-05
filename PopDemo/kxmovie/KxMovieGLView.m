@@ -207,12 +207,12 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
    
     assert(rgbFrame.rgb.length == rgbFrame.width * rgbFrame.height * 3);
 
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);//控制的是所读取数据的对齐方式 默认4字节对齐 既一行的图像数据字节数必须是4的整数倍，既读取数据时，读取4个字节用来渲染一行 之后读取4字节数据用来渲染第二行，对应RGB 3 字节  若一行10个像素 既30个字节 在4字节对齐的模式下 OpenGL会读取32个字节的数据 若不加注意会导致glTextImage中函数的读取越界，从而全面崩溃
     
     if (0 == _texture)
-        glGenTextures(1, &_texture);
+        glGenTextures(1, &_texture);//生成一个纹理
     
-    glBindTexture(GL_TEXTURE_2D, _texture);
+    glBindTexture(GL_TEXTURE_2D, _texture);//绑定一个纹理
     
     glTexImage2D(GL_TEXTURE_2D,
                  0,
@@ -235,9 +235,9 @@ static void mat4f_LoadOrtho(float left, float right, float bottom, float top, fl
     if (_texture == 0)
         return NO;
     
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
-    glUniform1i(_uniformSampler, 0);
+    glActiveTexture(GL_TEXTURE0);// 选择一个纹理槽位
+    glBindTexture(GL_TEXTURE_2D, _texture);//将纹理和槽位进行绑定
+    glUniform1i(_uniformSampler, 0);//给shader变量赋值 指定赋值变量的位置
     
     return YES;
 }
@@ -406,13 +406,28 @@ enum {
             return nil;
         }
         
-        glGenFramebuffers(1, &_framebuffer);
-        glGenRenderbuffers(1, &_renderbuffer);
-        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
+        glGenFramebuffers(1, &_framebuffer);//创建一个渲染缓冲区对象
+        glGenRenderbuffers(1, &_renderbuffer);//创建一个帧缓冲区对象
+        glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);//将帧缓冲区对象绑定到管线
+        glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);//将渲染缓冲区对象绑定到管线上
+        
+        // 为 颜色缓冲区 分配存储空间
         [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];
+         //我们也可以得到当前绑定的渲染缓存对象的一些参数。Target应该是GL_RENDERBUFFER，第二个参数是所要得到的参数名字。最后一个是指向存储返回值的整型量的指针。渲染缓存的变量名有如下：
+        /**
+         GL_RENDERBUFFER_WIDTH
+         GL_RENDERBUFFER_HEIGHT
+         GL_RENDERBUFFER_INTERNAL_FORMAT
+         GL_RENDERBUFFER_RED_SIZE
+         GL_RENDERBUFFER_GREEN_SIZE
+         GL_RENDERBUFFER_BLUE_SIZE
+         GL_RENDERBUFFER_ALPHA_SIZE
+         GL_RENDERBUFFER_DEPTH_SIZE
+         GL_RENDERBUFFER_STENCIL_SIZE
+         */
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
         glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+        //将_colorRenderBuffer 装配到GL_COLOR_ATTACHMENT0 这个装配点上
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderbuffer);
         
         GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -511,7 +526,7 @@ enum {
 {
     BOOL result = NO;
     GLuint vertShader = 0, fragShader = 0;
-    
+    //每个对象有且仅有一个Vertex Shader对象和一个Fragment Shader对象连接到它
 	_program = glCreateProgram();
 	
     vertShader = compileShader(GL_VERTEX_SHADER, vertexShaderString);
@@ -530,6 +545,7 @@ enum {
 	glLinkProgram(_program);
     
     GLint status;
+    //检查着色器的  获取着色器相关的错误信息
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
 		LoggerVideo(0, @"Failed to link program %d", _program);
@@ -537,7 +553,7 @@ enum {
     }
     
     result = validateProgram(_program);
-        
+     //获取shader里面的变量，这里记得要在glLinkProgram后面，后面，后面！   
     _uniformMatrix = glGetUniformLocation(_program, "modelViewProjectionMatrix");
     [_renderer resolveUniforms:_program];
 	
@@ -591,12 +607,12 @@ exit:
         1.0f, 0.0f,
     };
 	
-    [EAGLContext setCurrentContext:_context];
+    [EAGLContext setCurrentContext:_context];//设置上下文
     
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
-    glViewport(0, 0, _backingWidth, _backingHeight);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);//绑定——framebuffer  OpenGL的绘制结果不是直接显示到屏幕上，而是存起来，这个存储的东西就是FBO 所以FBO里面包含了color depth stencil 等一些用于显示的信息 这里的_framebuffer就是这个FBO
+    glViewport(0, 0, _backingWidth, _backingHeight);//打开一个窗口 创建图形映射的区域
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);// 指定刷新颜色缓冲区时 所用的颜色
+    glClear(GL_COLOR_BUFFER_BIT);//清除当前缓冲区颜色 L_COLOR_BUFFER_BIT 当前可写的颜色缓冲 后面的参数表示需要清除的缓冲区
 	glUseProgram(_program);
         
     if (frame) {
@@ -607,9 +623,11 @@ exit:
         
         GLfloat modelviewProj[16];
         mat4f_LoadOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, modelviewProj);
+        //设置矩阵旋转
         glUniformMatrix4fv(_uniformMatrix, 1, GL_FALSE, modelviewProj);
-        
+        //为顶点着色器位置信息赋值，positionSlot表示顶点着色器位置属性（即，Position）；2表示每一个顶点信息由几个值组成，这个值必须位1，2，3或4；GL_FLOAT表示顶点信息的数据类型；GL_FALSE表示不要将数据类型标准化（即fixed-point）；stride表示数组中每个元素的长度；pCoords表示数组的首地址
         glVertexAttribPointer(ATTRIBUTE_VERTEX, 2, GL_FLOAT, 0, 0, _vertices);
+        //开启顶点属性数组
         glEnableVertexAttribArray(ATTRIBUTE_VERTEX);
         glVertexAttribPointer(ATTRIBUTE_TEXCOORD, 2, GL_FLOAT, 0, 0, texCoords);
         glEnableVertexAttribArray(ATTRIBUTE_TEXCOORD);

@@ -247,7 +247,7 @@ static NSArray *collectStreams(AVFormatContext *formatCtx, enum AVMediaType code
 {
     NSMutableArray *ma = [NSMutableArray array];
     for (NSInteger i = 0; i < formatCtx->nb_streams; ++i)
-        if (codecType == formatCtx->streams[i]->codec->codec_type)
+        if (codecType == formatCtx->streams[i]->codec->codec_type)//判断类型
             [ma addObject: [NSNumber numberWithInteger: i]];
     return [ma copy];
 }
@@ -774,18 +774,18 @@ static int interrupt_callback(void *ctx);
         formatCtx = avformat_alloc_context();
         if (!formatCtx)
             return kxMovieErrorOpenFile;
-        
+        // 处理中断函数 第一个函数指针 指向一个函数
         AVIOInterruptCB cb = {interrupt_callback, (__bridge void *)(self)};
         formatCtx->interrupt_callback = cb;
     }
-    
+    //打开文件 url_open,url_read
     if (avformat_open_input(&formatCtx, [path cStringUsingEncoding: NSUTF8StringEncoding], NULL, NULL) < 0) {
         
         if (formatCtx)
             avformat_free_context(formatCtx);
         return kxMovieErrorOpenFile;
     }
-    
+    //读取视音频数据相关的信息 parser find_decoder avcoder_open2 实现了解码器的查找，解码器的打开，视音频帧的读取 视音频帧的解码
     if (avformat_find_stream_info(formatCtx, NULL) < 0) {
         
         avformat_close_input(&formatCtx);
@@ -825,10 +825,10 @@ static int interrupt_callback(void *ctx);
 
 - (kxMovieError) openVideoStream: (NSInteger) videoStream
 {    
-    // get a pointer to the codec context for the video stream
+    // get a pointer to the codec context for the video stream  获取编解码器结构体
     AVCodecContext *codecCtx = _formatCtx->streams[videoStream]->codec;
     
-    // find the decoder for the video stream
+    // find the decoder for the video stream  找到解码器
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
     if (!codec)
         return kxMovieErrorCodecNotFound;
@@ -838,11 +838,11 @@ static int interrupt_callback(void *ctx);
     //if(codec->capabilities & CODEC_CAP_TRUNCATED)
     //    _codecCtx->flags |= CODEC_FLAG_TRUNCATED;
     
-    // open codec
+    // open codec 打开解码器
     if (avcodec_open2(codecCtx, codec, NULL) < 0)
         return kxMovieErrorOpenCodec;
         
-    _videoFrame = av_frame_alloc();
+    _videoFrame = av_frame_alloc();// 初始化一个视频帧 分配一次 存储原始数据对于视频帧就是YUV或者RGB
 
     if (!_videoFrame) {
         avcodec_close(codecCtx);
@@ -855,11 +855,12 @@ static int interrupt_callback(void *ctx);
     // determine fps
     
     AVStream *st = _formatCtx->streams[_videoStream];
+    //PTS*time_base = 真正的时间
     avStreamFPSTimeBase(st, 0.04, &_fps, &_videoTimeBase);
     
-    LoggerVideo(1, @"video codec size: %d:%d fps: %.3f tb: %f",
-                self.frameWidth,
-                self.frameHeight,
+    LoggerVideo(1, @"video codec size: %lu:%lu fps: %.3f tb: %f",
+                (unsigned long)self.frameWidth,
+                (unsigned long)self.frameHeight,
                 _fps,
                 _videoTimeBase);
     

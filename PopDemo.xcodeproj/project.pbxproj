@@ -24,6 +24,7 @@
 		D75819271F013DB300B6FFB9 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D75819261F013DB300B6FFB9 /* libiconv.tbd */; };
 		D75819291F013DC300B6FFB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75819281F013DC300B6FFB9 /* VideoToolbox.framework */; };
 		D763CB941EE6B79A004FEBCF /* QTextAsyncLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D763CB931EE6B79A004FEBCF /* QTextAsyncLayer.m */; };
+		D77E385D1F4D152700F7138A /* FFmpegStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = D77E385C1F4D152700F7138A /* FFmpegStreamer.m */; };
 		D784BC8F1F0DDFE40046F90C /* FFmpegManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */; };
 		D7A8AA1A1E138E4B00F83024 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7A8AA191E138E4B00F83024 /* MapKit.framework */; };
 		D7B2FE261E0032B60084B575 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B2FE251E0032B60084B575 /* main.m */; };
@@ -212,6 +213,8 @@
 		D75819281F013DC300B6FFB9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		D763CB921EE6B79A004FEBCF /* QTextAsyncLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTextAsyncLayer.h; sourceTree = "<group>"; };
 		D763CB931EE6B79A004FEBCF /* QTextAsyncLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTextAsyncLayer.m; sourceTree = "<group>"; };
+		D77E385B1F4D152700F7138A /* FFmpegStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpegStreamer.h; sourceTree = "<group>"; };
+		D77E385C1F4D152700F7138A /* FFmpegStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpegStreamer.m; sourceTree = "<group>"; };
 		D784BC8D1F0DDFE40046F90C /* FFmpegManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFmpegManager.h; sourceTree = "<group>"; };
 		D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFmpegManager.m; sourceTree = "<group>"; };
 		D7A8AA191E138E4B00F83024 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -583,6 +586,8 @@
 				D7B2FEAE1E0038CC0084B575 /* rootController.m */,
 				D784BC8D1F0DDFE40046F90C /* FFmpegManager.h */,
 				D784BC8E1F0DDFE40046F90C /* FFmpegManager.m */,
+				D77E385B1F4D152700F7138A /* FFmpegStreamer.h */,
+				D77E385C1F4D152700F7138A /* FFmpegStreamer.m */,
 				D756DABC1ED3CCDD00B8C471 /* firstViewController.h */,
 				D756DABD1ED3CCDD00B8C471 /* firstViewController.m */,
 				D756DAC51ED3D50100B8C471 /* PresentingAnimationController.h */,
@@ -787,6 +792,7 @@
 					D7B2FE201E0032B60084B575 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = HKZ94N2PPE;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 0;
@@ -859,6 +865,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7B2FE991E0034410084B575 /* POPAnimationRuntime.mm in Sources */,
+				D77E385D1F4D152700F7138A /* FFmpegStreamer.m in Sources */,
 				D7CE819F1EE0402C0085EA59 /* QSLable.m in Sources */,
 				D7B2FEA51E0034410084B575 /* POPVector.mm in Sources */,
 				D756DAC41ED3CD1200B8C471 /* thirdViewController.m in Sources */,
@@ -1023,6 +1030,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HKZ94N2PPE;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/$(PRODUCT_NAME)/FFmpeg-iOS/include";
 				INFOPLIST_FILE = PopDemo/Info.plist;
@@ -1034,6 +1042,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tmen.PopDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1041,6 +1051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HKZ94N2PPE;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/$(PRODUCT_NAME)/FFmpeg-iOS/include";
 				INFOPLIST_FILE = PopDemo/Info.plist;
@@ -1052,6 +1063,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tmen.PopDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

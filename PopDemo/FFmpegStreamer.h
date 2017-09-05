@@ -1,15 +1,15 @@
 //
-//  FFmpegManager.h
+//  FFmpegStreamer.h
 //  PopDemo
 //
-//  Created by qiansheng on 2017/7/6.
+//  Created by qiansheng on 2017/7/10.
 //  Copyright © 2017年 胜的钱. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface FFmpegManager : NSObject
+@interface FFmpegStreamer : NSObject
 @property (nonatomic, copy) NSString *inputurl;
 @property (nonatomic, copy) NSString *outputurl;
-- (void)TransferDecode;
+- (void) pushStream;
 @end

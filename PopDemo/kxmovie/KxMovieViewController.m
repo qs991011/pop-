@@ -536,7 +536,7 @@ _messageLabel.hidden = YES;
     _debugStartTime = -1;
 #endif
 
-    [self asyncDecodeFrames];
+    [self asyncDecodeFrames];//开启异步线程
     [self updatePlayButton];
 
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
@@ -1050,9 +1050,11 @@ _messageLabel.hidden = YES;
         }
     });
 }
-
+// tick函数其实就相当于一个被一个定时器循环调用一样隔多少秒调用一次
 - (void) tick
 {
+    //缓存的时长
+    //_buffered 表示是否需要缓存，如果数组里面有数据 当然不需要缓存为NO，否则为YES
     if (_buffered && ((_bufferedDuration > _minBufferedDuration) || _decoder.isEOF)) {
         
         _tickCorrectionTime = 0;
@@ -1062,15 +1064,15 @@ _messageLabel.hidden = YES;
     
     CGFloat interval = 0;
     if (!_buffered)
-        interval = [self presentFrame];
+        interval = [self presentFrame];//显示一帧
     
     if (self.playing) {
-        
+        //还有可显示的音视频帧
         const NSUInteger leftFrames =
         (_decoder.validVideo ? _videoFrames.count : 0) +
         (_decoder.validAudio ? _audioFrames.count : 0);
         
-        if (0 == leftFrames) {
+        if (0 == leftFrames) {//如果没有要显示的数据了
             
             if (_decoder.isEOF) {
                 
@@ -1079,10 +1081,10 @@ _messageLabel.hidden = YES;
                 return;
             }
             
-            if (_minBufferedDuration > 0 && !_buffered) {
+            if (_minBufferedDuration > 0 && !_buffered) {//确认缓存里面是否还有数据
                                 
                 _buffered = YES;
-                [_activityIndicatorView startAnimating];
+                [_activityIndicatorView startAnimating];//菊花开始转
             }
         }
         
