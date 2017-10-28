@@ -82,7 +82,7 @@ __weak id reference = nil;
 }
 
 - (void)Pullflow {
-    NSString *path = @"rtmp://192.168.2.14:1935/rtmplive/room";
+    NSString *path = @"rtmp://172.31.42.183/rtmplive/room";
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     if ([path.pathExtension isEqualToString:@"wmv"]) {
         parameters[KxMovieParameterMinBufferedDuration] = @(5.0);
